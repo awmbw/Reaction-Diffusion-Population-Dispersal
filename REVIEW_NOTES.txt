@@ -82,3 +82,25 @@ Final document and repository checks
   from the prepared repository layout; reran its tests: 26 passed.
 - The final PDFs in the original submission folder and prepared repository are
   byte-for-byte identical. Original PDFs were retained under tmp/pdfs/.
+
+Publication status and required owner action
+--------------------------------------------
+The GitHub push was attempted and rejected with HTTP 403: the environment is
+signed in as aum1806, which lacks write access to awmbw's repository. The remote
+repository therefore has NOT received the prepared project files.
+
+The local github_repo/ directory is a clone of the supplied repository, with
+all deliverables committed on main. Authenticate Git as awmbw, or grant write
+access to the current GitHub account, then run from the original project folder:
+
+    git -C github_repo push origin main
+
+For example, if GitHub CLI is installed, use gh auth login (or gh auth switch
+if awmbw is already configured) followed by gh auth setup-git, then push. Do not
+paste access tokens into chat. Alternatively, upload the contents of the ready
+ZIP using GitHub's web interface while signed into the repository owner account.
+
+Before submitting the report, verify its repository/figure/animation links are
+accessible while signed out. They point to the final intended locations and will
+work after the prepared files are uploaded. Remote CI could not run because the
+push was denied; only the local tests and builds have been verified.
