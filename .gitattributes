@@ -1,0 +1,11 @@
+* text=auto
+*.py text eol=lf
+*.tex text eol=lf
+*.csv text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+Makefile text eol=lf
+*.pdf -text
+*.png -text
+*.gif -text
