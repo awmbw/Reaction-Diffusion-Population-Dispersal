@@ -4,7 +4,7 @@ MAC-F314 Mathematical Modelling, Problem Statement 11, BITS Pilani, Hyderabad Ca
 
 A reproducible study of a central population drop spreading under logistic growth and diffusion. The project derives the model from conservation and Fick's law, implements the required nested spatial and temporal loops, and compares measured wave speeds with Fisher-KPP theory.
 
-**[Download the combined project report](submission/Reaction_Diffusion_Project_Report.pdf)**. It contains typed mathematical derivations, explained figures, reproduction instructions, and the complete programming code in Appendix A. This is the single report to submit. The [separate code listing](submission/Reaction_Diffusion_Complete_Code.pdf) is an optional reading copy.
+**[Download the project report](submission/Reaction_Diffusion_Project_Report.pdf)**. It contains typed mathematical derivations, explained figures, reproduction instructions, and the complete programming code in Appendix A.
 
 ## Model and numerical method
 
@@ -42,7 +42,7 @@ make report                      # TeX Live with latexmk
 make report-tectonic              # portable Tectonic compiler
 ```
 
-For the TeX Live route on Ubuntu/Debian, install `latexmk`, `texlive-latex-extra`, `texlive-fonts-recommended`, and `texlive-pictures`. Tectonic downloads its TeX packages on first use. Without Make, run `tectonic report.tex` and `tectonic code_listing.tex` from `report/`, then copy the two PDFs into `submission/` using the published filenames. Rebuild after rerunning the experiments so the PDFs reflect the regenerated tables and timings.
+For the TeX Live route on Ubuntu/Debian, install `latexmk`, `texlive-latex-extra`, `texlive-fonts-recommended`, and `texlive-pictures`. Tectonic downloads its TeX packages on first use. Without Make, run `tectonic report.tex` from `report/`, then copy `report/report.pdf` to `submission/Reaction_Diffusion_Project_Report.pdf` from the repository root. Rebuild after rerunning the experiments so the report reflects the regenerated tables and timings.
 
 ## Files
 
@@ -59,11 +59,11 @@ For the TeX Live route on Ubuntu/Debian, install `latexmk`, `texlive-latex-extra
 | [tests/](tests/) | Numerical checks and solver regression tests |
 | [report/](report/) | Editable LaTeX source; code is included directly from source files |
 | [outputs/](outputs/) | Generated images, animations and data |
-| [submission/](submission/) | Combined report and optional separate code listing |
+| [submission/](submission/) | Final report, including the complete code appendix |
 
 ## Experiments and limits
 
-The experiments cover symmetric spreading, long-time speed relaxation, a 16-pair $(r,D)$ sweep, initial-tail speed selection, spatial and temporal convergence, mass conservation, reaction-aware stability, variable carrying capacity, and lethal-edge critical patch size.
+The experiments cover symmetric spreading, long-time speed relaxation, a 16-pair $(r,D)$ sweep, initial-tail speed selection, coupled space-time refinement and fixed-grid temporal convergence, mass conservation, reaction-aware stability, variable carrying capacity, and lethal-edge critical patch size.
 
 Lower carrying capacity limits the eventual density but leaves the low-density growth rate positive. Lethal Dirichlet edges produce a persistence threshold $L_c=\pi\sqrt{D/r}$; positive equilibria require $L>L_c$. This is a distinction between the models studied, not a claim that every real invasion needs lethal boundaries to be stopped.
 

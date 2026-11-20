@@ -13,5 +13,6 @@ report/*.fls
 report/*.fdb_latexmk
 report/*.synctex.gz
 report/report.pdf
-report/code_listing.pdf
-# Generated research outputs and submission PDFs are intentionally versioned.
+# Local review notes are kept outside the public deliverables.
+REVIEW_NOTES.txt
+# Generated research outputs and the combined submission PDF are intentionally versioned.

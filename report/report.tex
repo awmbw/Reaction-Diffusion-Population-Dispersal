@@ -147,11 +147,12 @@ analysis that it admits travelling waves only for speeds $v\ge v^*=2\sqrt{rD}$.
 The equation is solved with an explicit finite difference scheme in which the spatial
 second-derivative loop is nested inside the temporal Euler loop. We prove that the scheme keeps
 the density between $0$ and $K$ under a time-step bound, and we confirm its accuracy against
-exact solutions: observed orders are \resSpaceOrder{} in space and \resTimeOrder{} in time. A
+exact solutions: the observed order is \resSpaceOrder{} under coupled refinement with
+$\Delta t\propto\Delta x^2$, and \resTimeOrder{} for temporal refinement on a fixed grid. A
 localized drop released at the centre of the domain spreads as two fronts. The measured
 speed over $20\le t\le 40$ is \resBaseSpeed{}, which is \resBasePercentLow{}\,\% below the
-textbook value of $2$. Rather than treating this gap as error, we explain it. The logarithmic
-Bramson delay and the scheme's own discrete wave speed together predict \resBasePredicted{}, within
+asymptotic value of $2$. Finite-time relaxation and numerical dispersion account for this deficit.
+The logarithmic Bramson delay and the scheme's own discrete wave speed together predict \resBasePredicted{}, within
 \resBaseGap{} of the measurement. A long run then recovers the speed \resLongSpeed{} and the delay
 coefficient \resLongDelay{} (theory $3/2$), and a sweep over sixteen $(r,D)$ pairs gives an
 exponent of \resSweepExponent{} in $v\propto(rD)^p$, confirming the square-root law.
@@ -702,7 +703,6 @@ Direct links are provided to the
 \href{https://github.com/awmbw/Reaction-Diffusion-Population-Dispersal/tree/main/outputs/figures}{generated figures},
 \href{https://github.com/awmbw/Reaction-Diffusion-Population-Dispersal/blob/main/outputs/animations/wave_spreading.gif}{spreading-wave animation}, and
 \href{https://github.com/awmbw/Reaction-Diffusion-Population-Dispersal/blob/main/outputs/animations/capacity_gradient.gif}{capacity-gradient animation}.
-Only this combined report needs to be submitted.
 The code is a small Python package, \code{rdpop}, and its modules are listed in
 Table~\ref{tab:modules}. Pure Python loops are slow, so \code{solver.py} holds two engines with the same
 interface: \code{solve\_loops}, the reference solver with explicit nested loops, and \code{solve\_vector},
@@ -739,13 +739,12 @@ File & Purpose\\
   \item Generate every result: \code{python run\_all.py}.
   \item Find the figures in \code{outputs/figures}, the animations in \code{outputs/animations}, and the
         measured values in \code{outputs/data}.
-  \item Rebuild the PDFs with \code{make report} or follow the compiler instructions
-        in the repository README. Equations remain typeset LaTeX throughout.
+  \item Rebuild the report with \code{make report} or follow the compiler instructions
+        in the repository README.
 \end{enumerate}
 
 Measured summary values and result tables are written by \code{report\_data.py} from the
-simulation output and read by the LaTeX source. Model parameters and explanatory text
-are maintained explicitly and should be reviewed when experiments change.
+simulation output and read by the LaTeX source.
 
 \subsection{Baseline parameters}
 Table~\ref{tab:params} lists the baseline values. They are scaled units, following
@@ -795,12 +794,13 @@ Figure~\ref{fig:heatmap} shows the same run as a heatmap, with time on the verti
 the horizontal axis and density as colour. The whole history is visible at once. White regions are
 empty, dark regions are full, and the narrow band between them is the front. The V shape has straight
 edges, which is the visual signature of a constant speed, since a pure diffusion spread would instead
-trace a curved parabola $x\propto\sqrt{t}$. The dashed lines have slope $v^*=2$ and pass through the
-measured fronts at $t=40$. They track the fronts closely over most of the run, and the small
+trace a curve $|x-L/2|\propto\sqrt{t}$. The dashed guides represent front speeds
+$dx/dt=\pm v^*=\pm2$, so their plotted slopes are $dt/dx=\pm1/2$ with these axes.
+They pass through the measured fronts at $t=40$ and track them closely over most of the run. The small
 separation at early times is the slow approach to $v^*$ analysed below.
 
 \fig{heatmap}{Spatiotemporal heatmap of density, with time on the Y axis and space on the X axis.
-Dashed lines have the theoretical slope $v^*=2$.}
+Dashed guides represent the theoretical front speed $v^*=2$; their plotted slopes are $dt/dx=\pm1/2$.}
 
 \subsection{Measured wave speed}
 The left panel of Figure~\ref{fig:front} plots the distance of each front from the centre. The curves
@@ -948,16 +948,20 @@ exact values at both ends, and measured the error at $t=5$. For the spatial stud
 with $\alpha=0.25$ held fixed, so that $\Delta t\propto\Delta x^2$ and the total error scales as $\Delta x^2$.
 For the temporal study, $\Delta x=0.1$ was held fixed, and each run was compared with a run using a
 much smaller step on the same grid, so that the spatial error cancels. Figure~\ref{fig:convergence}
-shows the results. The observed orders are \resSpaceOrder{} in space and \resTimeOrder{} in time, matching
-the truncation error $O(\Delta t)+O(\Delta x^2)$. Table~\ref{tab:space} lists the spatial errors.
+shows the results. Coupled refinement gives an observed order of \resSpaceOrder{} as a function
+of $\Delta x$, consistent with $O(\Delta t)+O(\Delta x^2)=O(\Delta x^2)$ when
+$\Delta t\propto\Delta x^2$. This measures the combined space-time error, rather than
+isolating the spatial error alone. The temporal study gives order \resTimeOrder{} on a fixed
+grid. Table~\ref{tab:space} lists the errors under coupled refinement.
 
-\fig{convergence}{Error against step size on logarithmic axes. Left: spatial refinement against the exact
-wave. Right: temporal refinement against a fine-step reference. The dotted lines show the theoretical
+\fig{convergence}{Error against step size on logarithmic axes. Left: coupled refinement with
+$\Delta t\propto\Delta x^2$, compared with the exact wave. Right: temporal refinement on a fixed grid
+against a fine-step reference. The dotted lines show the theoretical
 orders.}
 
 \begin{table}[H]
 \centering\small
-\caption{Spatial refinement against the exact solution at $t=5$.}
+\caption{Coupled space-time refinement against the exact solution at $t=5$, with $\Delta t\propto\Delta x^2$.}
 \label{tab:space}
 \input{table_space.tex}
 \end{table}

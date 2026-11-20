@@ -121,9 +121,10 @@ def fig_heatmap(results, folder):
     fig, ax = plt.subplots(figsize=TALL)
     _heatmap(ax, sol, fig, r"density $u$")
     t = sol.t[sol.t >= 10.0]
-    # Lines of slope v* pinned to the measured front at the end of the run.
+    # Constant-speed guides pinned to the measured front at the end of the run.
+    # With time on the vertical axis, their plotted slopes are dt/dx = +/-1/v*.
     offset = base["right"][-1] - 2.0 * sol.t[-1]
-    for sign, label in ((1.0, r"slope $v^*=2$"), (-1.0, None)):
+    for sign, label in ((1.0, r"front speed $v^*=2$"), (-1.0, None)):
         ax.plot(base["centre"] + sign * (2.0 * t + offset), t, color=ORANGE, ls="--", lw=1.1,
                 label=label)
     ax.set(xlim=(0, 200), ylim=(0, 40))
